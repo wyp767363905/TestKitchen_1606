@@ -9,6 +9,48 @@
 import UIKit
 
 class MainTabBarController: UITabBarController {
+    
+    //json文件对应的数组
+    
+    private var array: Array<Dictionary<String,String>>? {
+        
+        get {
+            //读文件
+            let path = NSBundle.mainBundle().pathForResource("Ctrl.json", ofType: nil)
+            
+            var myArray: Array<Dictionary<String,String>>? = nil
+            if let filePath = path {
+                
+                let data = NSData(contentsOfFile: filePath)
+                
+                if let jsonData = data {
+                    
+                    do {
+                        
+                        let jsonValue = try NSJSONSerialization.JSONObjectWithData(jsonData, options: .MutableContainers)
+                        if jsonValue.isKindOfClass(NSArray.self) {
+                            
+                            myArray = jsonValue as? Array<Dictionary<String,String>>
+                            
+                        }
+                        
+                    }catch {
+                        //程序出现异常
+                        print(error)
+                        return nil
+                        
+                    }
+                    
+                }
+                
+            }
+            
+            return myArray
+            
+        }
+        
+    }
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +66,24 @@ class MainTabBarController: UITabBarController {
     //创建视图控制器
     func createViewControllers(){
         
-        let  ctrlNames = ["CookbookViewController","CommunityViewController","MallViewController","FoodClassViewController","ProfileViewController"]
+        var ctrlNames = [String]()
+        
+        if let tmpArray = self.array {
+            //json文件的数据解析成功
+            //并且数组里面有数据
+            for dict in tmpArray {
+                
+                let name = dict["ctrlName"]
+                ctrlNames.append(name!)
+                
+            }
+        }else{
+            
+            ctrlNames = ["CookbookViewController","CommunityViewController","MallViewController","FoodClassViewController","ProfileViewController"]
+            
+        }
+        
+        
         
         var vCtrlArray = Array<UINavigationController>()
         
