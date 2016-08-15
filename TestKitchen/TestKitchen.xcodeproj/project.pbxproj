@@ -25,6 +25,13 @@
 		BC385C411D61555300C5BFA6 /* LaunchImage-800-667h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC385C361D61555300C5BFA6 /* LaunchImage-800-667h@2x.png */; };
 		BC385C421D61555300C5BFA6 /* LaunchImage-800-Landscape-736h@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC385C371D61555300C5BFA6 /* LaunchImage-800-Landscape-736h@3x.png */; };
 		BC385C431D61555300C5BFA6 /* LaunchImage-800-Portrait-736h@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC385C381D61555300C5BFA6 /* LaunchImage-800-Portrait-736h@3x.png */; };
+		BC385C451D615A8F00C5BFA6 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC385C441D615A8F00C5BFA6 /* MainTabBarController.swift */; };
+		BC385C491D615AFC00C5BFA6 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC385C481D615AFC00C5BFA6 /* BaseViewController.swift */; };
+		BC385C4F1D615B7600C5BFA6 /* CommunityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC385C4E1D615B7600C5BFA6 /* CommunityViewController.swift */; };
+		BC385C511D615B8500C5BFA6 /* CookbookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC385C501D615B8500C5BFA6 /* CookbookViewController.swift */; };
+		BC385C531D615B9800C5BFA6 /* FoodClassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC385C521D615B9800C5BFA6 /* FoodClassViewController.swift */; };
+		BC385C551D615BAA00C5BFA6 /* MallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC385C541D615BAA00C5BFA6 /* MallViewController.swift */; };
+		BC385C571D615BB800C5BFA6 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC385C561D615BB800C5BFA6 /* ProfileViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +76,13 @@
 		BC385C361D61555300C5BFA6 /* LaunchImage-800-667h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LaunchImage-800-667h@2x.png"; sourceTree = "<group>"; };
 		BC385C371D61555300C5BFA6 /* LaunchImage-800-Landscape-736h@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LaunchImage-800-Landscape-736h@3x.png"; sourceTree = "<group>"; };
 		BC385C381D61555300C5BFA6 /* LaunchImage-800-Portrait-736h@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LaunchImage-800-Portrait-736h@3x.png"; sourceTree = "<group>"; };
+		BC385C441D615A8F00C5BFA6 /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		BC385C481D615AFC00C5BFA6 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		BC385C4E1D615B7600C5BFA6 /* CommunityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommunityViewController.swift; sourceTree = "<group>"; };
+		BC385C501D615B8500C5BFA6 /* CookbookViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CookbookViewController.swift; sourceTree = "<group>"; };
+		BC385C521D615B9800C5BFA6 /* FoodClassViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodClassViewController.swift; sourceTree = "<group>"; };
+		BC385C541D615BAA00C5BFA6 /* MallViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MallViewController.swift; sourceTree = "<group>"; };
+		BC385C561D615BB800C5BFA6 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,6 +180,8 @@
 		BC385C101D6153F800C5BFA6 /* common */ = {
 			isa = PBXGroup;
 			children = (
+				BC385C441D615A8F00C5BFA6 /* MainTabBarController.swift */,
+				BC385C481D615AFC00C5BFA6 /* BaseViewController.swift */,
 			);
 			path = common;
 			sourceTree = "<group>";
@@ -191,6 +207,7 @@
 		BC385C131D6153F800C5BFA6 /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				BC385C4E1D615B7600C5BFA6 /* CommunityViewController.swift */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -230,6 +247,7 @@
 		BC385C181D6153F800C5BFA6 /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				BC385C501D615B8500C5BFA6 /* CookbookViewController.swift */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -269,6 +287,7 @@
 		BC385C1D1D6153F800C5BFA6 /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				BC385C521D615B9800C5BFA6 /* FoodClassViewController.swift */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -308,6 +327,7 @@
 		BC385C221D6153F800C5BFA6 /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				BC385C541D615BAA00C5BFA6 /* MallViewController.swift */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -347,6 +367,7 @@
 		BC385C271D6153F800C5BFA6 /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				BC385C561D615BB800C5BFA6 /* ProfileViewController.swift */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -548,8 +569,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BC385C551D615BAA00C5BFA6 /* MallViewController.swift in Sources */,
 				BC385BE41D6151B300C5BFA6 /* ViewController.swift in Sources */,
+				BC385C531D615B9800C5BFA6 /* FoodClassViewController.swift in Sources */,
+				BC385C491D615AFC00C5BFA6 /* BaseViewController.swift in Sources */,
 				BC385BE21D6151B300C5BFA6 /* AppDelegate.swift in Sources */,
+				BC385C4F1D615B7600C5BFA6 /* CommunityViewController.swift in Sources */,
+				BC385C571D615BB800C5BFA6 /* ProfileViewController.swift in Sources */,
+				BC385C451D615A8F00C5BFA6 /* MainTabBarController.swift in Sources */,
+				BC385C511D615B8500C5BFA6 /* CookbookViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
