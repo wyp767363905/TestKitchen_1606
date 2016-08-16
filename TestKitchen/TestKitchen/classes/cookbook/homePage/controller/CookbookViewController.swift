@@ -14,7 +14,21 @@ class CookbookViewController: BaseViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
         createMyNav()
+        
+        downloadeRecommendData()
+        
+    }
+    
+    //下载推荐的数据
+    func downloadeRecommendData() {
+        
+        let dict = ["methodName":"SceneHome","token":"","user_id":"","version":"4.5"]
+        
+        let downloader = KTCDownloader()
+        downloader.delegate = self
+        downloader.postWithUrl(kHostUrl, params: dict)
         
     }
     
@@ -56,3 +70,25 @@ class CookbookViewController: BaseViewController {
     */
 
 }
+
+//MARK: KTCDownloader代理
+extension CookbookViewController : KTCDownloaderDelegate{
+    
+    func downloader(downloader: KTCDownloader, didFailWithError error: NSError) {
+        print(error)
+    }
+    
+    func downloader(downloader: KTCDownloader, didFinishWithData data: NSData?) {
+        
+        let str = NSString(data: data!, encoding: NSUTF8StringEncoding)
+        print(str!)
+        
+    }
+    
+}
+
+
+
+
+
+
