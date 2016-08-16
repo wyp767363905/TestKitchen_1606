@@ -14,6 +14,29 @@ class CookbookViewController: BaseViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        createMyNav()
+        
+    }
+    
+    //创建导航
+    func createMyNav() {
+        
+        //扫一扫
+        addNavBtn("saoyisao", target: self, action: #selector(scanAction), isLeft: true)
+        
+        //搜索
+        addNavBtn("search", target: self, action: #selector(searchAction), isLeft: false)
+        
+    }
+    
+    //扫一扫
+    func scanAction() {
+        
+    }
+    
+    //搜索
+    func searchAction() {
+        
     }
 
     override func didReceiveMemoryWarning() {
