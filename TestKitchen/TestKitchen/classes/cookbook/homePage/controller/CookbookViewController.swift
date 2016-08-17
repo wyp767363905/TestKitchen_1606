@@ -9,15 +9,40 @@
 import UIKit
 
 class CookbookViewController: BaseViewController {
+    
+    //食材首页的推荐视图
+    private var recommendView: CBRecommendView?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         
+        //导航
         createMyNav()
         
+        //初始化视图
+        createHomePageView()
+        
+        //下载推荐的数据
         downloadeRecommendData()
+        
+    }
+    
+    //初始化视图
+    func createHomePageView(){
+        
+        automaticallyAdjustsScrollViewInsets = false
+        
+        //推荐
+        recommendView = CBRecommendView()
+        view.addSubview(recommendView!)
+        
+        recommendView?.snp_makeConstraints(closure: {
+            [weak self]
+            (make) in
+            make.edges.equalTo(self!.view).inset(UIEdgeInsetsMake(64, 0, 49, 0))
+        })
         
     }
     
@@ -80,8 +105,17 @@ extension CookbookViewController : KTCDownloaderDelegate{
     
     func downloader(downloader: KTCDownloader, didFinishWithData data: NSData?) {
         
-        let str = NSString(data: data!, encoding: NSUTF8StringEncoding)
-        print(str!)
+        if let jsonData = data {
+            
+            let model = CBRecommendModel.parseModel(jsonData)
+            
+            //显示数据
+            dispatch_async(dispatch_get_main_queue(), { 
+                [weak self] in 
+                self!.recommendView?.model = model
+            })
+            
+        }
         
     }
     

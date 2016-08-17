@@ -11,6 +11,8 @@ import UIKit
 //导入第三方库
 import SnapKit
 
+import Kingfisher
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
