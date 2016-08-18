@@ -174,8 +174,8 @@ class MainTabBarController: UITabBarController {
             })
             
             //设置tag值
-            btn.tag = 300+i
-            label.tag = 400
+            btn.tag = 3000+i
+            label.tag = 4000
             
             //默认选中第一个按钮
             if i == 0 {
@@ -190,10 +190,10 @@ class MainTabBarController: UITabBarController {
     func clickBtn(curBtn: UIButton) {
         
         //1.取消之前选中按钮的状态
-        let lastBtnVeiw = self.view.viewWithTag(300+selectedIndex)
+        let lastBtnVeiw = self.view.viewWithTag(3000+selectedIndex)
         if let tmpBtn = lastBtnVeiw {
             let lastBtn = tmpBtn as! UIButton
-            let lastView = tmpBtn.viewWithTag(400)
+            let lastView = tmpBtn.viewWithTag(4000)
             if let tmpLabel = lastView {
                 
                 let lastLabel = tmpLabel as! UILabel
@@ -205,7 +205,7 @@ class MainTabBarController: UITabBarController {
         }
         
         //2.设置当前选中按钮的状态
-        let curLabelView = curBtn.viewWithTag(400)
+        let curLabelView = curBtn.viewWithTag(4000)
         if let tmpLabel = curLabelView {
             
             let curLabel = tmpLabel as! UILabel
@@ -215,7 +215,7 @@ class MainTabBarController: UITabBarController {
         }
         
         //3.选中视图控制器
-        selectedIndex = curBtn.tag - 300
+        selectedIndex = curBtn.tag - 3000
         
     }
 
