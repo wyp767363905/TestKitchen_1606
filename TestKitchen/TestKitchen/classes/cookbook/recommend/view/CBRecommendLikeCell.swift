@@ -75,7 +75,7 @@ class CBRecommendLikeCell: UITableViewCell {
     }
     
     //创建cell的方法
-    class func createLikeCellFor(tableView: UITableView, atIndexPath indexPath: NSIndexPath, withModel listModel: CBRecommendWidgetListModel) -> CBRecommendLikeCell {
+    class func createLikeCellFor(tableView: UITableView, atIndexPath indexPath: NSIndexPath, withListModel listModel: CBRecommendWidgetListModel) -> CBRecommendLikeCell {
         
         //猜你喜欢
         let cellId = "recommendLikeCellId"
