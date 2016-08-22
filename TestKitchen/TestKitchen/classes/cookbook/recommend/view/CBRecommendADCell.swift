@@ -28,6 +28,10 @@ class CBRecommendADCell: UITableViewCell {
     
     func showData(){
         
+        for sub in scrollView.subviews {
+            sub.removeFromSuperview()
+        }
+        
         //0.添加一个容器视图
         let containerView = UIView.createView()
         
