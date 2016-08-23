@@ -28,7 +28,7 @@ class CBWorksCell: UITableViewCell {
             //大图片
             if model?.widget_data?.count > i*3 {
                 let imageModel = model?.widget_data![i*3]
-                if imageModel?.type == "iamge" {
+                if imageModel?.type == "image" {
                     
                     //获取按钮
                     let subView = contentView.viewWithTag(100+i)
@@ -47,7 +47,7 @@ class CBWorksCell: UITableViewCell {
             //用户的图片
             if model?.widget_data?.count > i*3+1 {
                 let imageModel = model?.widget_data![i*3+1]
-                if imageModel?.type == "iamge" {
+                if imageModel?.type == "image" {
                     
                     //获取按钮
                     let subView = contentView.viewWithTag(200+i)

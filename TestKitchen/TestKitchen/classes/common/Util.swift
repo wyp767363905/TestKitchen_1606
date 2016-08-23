@@ -19,6 +19,8 @@ public enum WidgetType: Int {
     case Special = 3        //早餐日记.健康100岁
     case Scene = 9          //全部场景
     case Talent = 4         //推荐达人
+    case Works = 8          //精选作品
+    case Subject = 7        //专题
     
 }
 
