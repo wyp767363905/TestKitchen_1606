@@ -8,10 +8,28 @@
 
 import UIKit
 
+protocol KTCSegmentCtrlDelegate:NSObjectProtocol {
+    func didSelectSegCtrl(segCtrl: KTCSegmentCtrl, atIndex index: Int)
+}
+
 class KTCSegmentCtrl: UIView {
     
+    //代理属性
+    weak var delegate:KTCSegmentCtrlDelegate?
+    
     //选中按钮的序号
-    var selectIndex: Int = 0
+    var selectIndex: Int = 0 {
+        
+        didSet {
+            if selectIndex != oldValue {
+                selectBtnAtIndex(selectIndex, lastIndex: oldValue)
+            }
+        }
+        
+    }
+    
+    //下划线视图
+    private var lineView: UIView?
     
     //重新实现初始化方法
     /*
@@ -48,7 +66,42 @@ class KTCSegmentCtrl: UIView {
                 
             }
             
+            //下划线视图
+            lineView = UIView.createView()
+            lineView?.backgroundColor = UIColor.orangeColor()
+            lineView?.frame = CGRectMake(0, bounds.size.height-2, w, 2)
+            addSubview(lineView!)
+            
         }
+        
+    }
+    
+    /*
+     index:当前选中的序号
+     lastIndex:上次选中的序号
+     */
+    func selectBtnAtIndex(index: Int, lastIndex: Int) {
+        
+        //选中当前点击的按钮
+        let curBtn = viewWithTag(300+index)
+        if curBtn?.isKindOfClass(KTCSegmentBtn.self) == true {
+            let btn = curBtn as! KTCSegmentBtn
+            btn.clicked = true
+        }
+        
+        //取消上次选中的按钮
+        let lastBtn = viewWithTag(300+lastIndex)
+        
+        if lastBtn?.isKindOfClass(KTCSegmentBtn.self) == true {
+            let lastSegBtn = lastBtn as! KTCSegmentBtn
+            lastSegBtn.clicked = false
+        }
+        
+//        //修改当前选中的序号
+//        selectIndex = index
+        
+        //修改下划线视图的位置
+        lineView?.frame.origin.x = (lineView?.bounds.size.width)!*CGFloat(selectIndex)
         
     }
     
@@ -57,18 +110,12 @@ class KTCSegmentCtrl: UIView {
         //如果点击的是已经选中的按钮
         if btn.tag != 300+selectIndex {
             
-            //选中当前点击的按钮
-            btn.clicked = true
-            
-            //取消上次选中的按钮
-            let lastBtn = viewWithTag(300+selectIndex)
-            
-            if lastBtn?.isKindOfClass(KTCSegmentBtn.self) == true {
-                let lastSegBtn = lastBtn as! KTCSegmentBtn
-                lastSegBtn.clicked = false
-            }
-            
+            //1.修改UI
             selectIndex = btn.tag-300
+            //selectBtnAtIndex(btn.tag-300)这个和上面的修改当前选中序号出现了循环调用导致程序崩溃,当打印self的时候出现很多次,所有出现了循环调用
+            
+            //2.其他操作
+            delegate?.didSelectSegCtrl(self, atIndex: selectIndex)
             
         }
         

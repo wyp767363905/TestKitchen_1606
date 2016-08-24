@@ -10,6 +10,9 @@ import UIKit
 
 class CookbookViewController: BaseViewController {
     
+    //滚动视图
+    var scrollView: UIScrollView?
+    
     //食材首页的推荐视图
     private var recommendView: CBRecommendView?
     
@@ -39,6 +42,22 @@ class CookbookViewController: BaseViewController {
         //下载食材的数据
         downloadFoodData()
         
+        //下载分类的数据
+        downloaderCategoryData()
+        
+    }
+    
+    //下载分类的数据
+    func downloaderCategoryData(){
+        
+        let params = ["methodName":"CategoryIndex"]
+        
+        let downloader = KTCDownloader()
+        downloader.delegate = self
+        downloader.type = .Category
+        
+        downloader.postWithUrl(kHostUrl, params: params)
+        
     }
     
     //下载食材的数据
@@ -59,12 +78,14 @@ class CookbookViewController: BaseViewController {
         automaticallyAdjustsScrollViewInsets = false
         
         //1.创建一个滚动视图
-        let scrollView = UIScrollView()
-        scrollView.pagingEnabled = true
-        scrollView.showsHorizontalScrollIndicator = false
-        view.addSubview(scrollView)
+        scrollView = UIScrollView()
+        scrollView?.pagingEnabled = true
+        scrollView?.showsHorizontalScrollIndicator = false
+        //设置代理
+        scrollView?.delegate = self
+        view.addSubview(scrollView!)
         //约束
-        scrollView.snp_makeConstraints {
+        scrollView?.snp_makeConstraints {
             [weak self]
             (make) in
             make.edges.equalTo(self!.view).inset(UIEdgeInsetsMake(64, 0, 49, 0))
@@ -72,12 +93,14 @@ class CookbookViewController: BaseViewController {
         
         //2.创建容器视图
         let containerView = UIView.createView()
-        scrollView.addSubview(containerView)
+        scrollView?.addSubview(containerView)
         
         //约束
-        containerView.snp_makeConstraints { (make) in
-            make.edges.equalTo(scrollView)
-            make.height.equalTo(scrollView)
+        containerView.snp_makeConstraints {
+            [weak self]
+            (make) in
+            make.edges.equalTo(self!.scrollView!)
+            make.height.equalTo(self!.scrollView!)
         }
         
         //3.添加子视图
@@ -96,7 +119,6 @@ class CookbookViewController: BaseViewController {
         
         //3.2.食材
         foodView = CBMaterialView()
-        foodView?.backgroundColor = UIColor.redColor()
         containerView.addSubview(foodView!)
         
         //约束
@@ -108,7 +130,6 @@ class CookbookViewController: BaseViewController {
         
         //3.3.分类
         categoryView = CBMaterialView()
-        categoryView?.backgroundColor = UIColor.blueColor()
         containerView.addSubview(categoryView!)
         
         //约束
@@ -141,6 +162,9 @@ class CookbookViewController: BaseViewController {
         
         //标题位置
         segCtrl = KTCSegmentCtrl(frame: CGRectMake(80, 0, kScreenWidth-80*2, 44), titleNames: ["推荐","食材","分类"])
+        
+        segCtrl?.delegate = self
+        
         navigationItem.titleView = segCtrl
         
         //扫一扫
@@ -202,11 +226,20 @@ extension CookbookViewController : KTCDownloaderDelegate{
             }else if downloader.type == .FoodMaterial {
                 //食材
                 let model = CBMaterialModel.parseModelWithData(jsonData)
-                print(model)
+                
+                dispatch_async(dispatch_get_main_queue(), {
+                    [weak self] in
+                    self!.foodView?.model = model
+                })
                 
             }else if downloader.type == .Category {
                 //分类
+                let model = CBMaterialModel.parseModelWithData(jsonData)
                 
+                dispatch_async(dispatch_get_main_queue(), { 
+                    [weak self] in
+                    self!.categoryView?.model = model
+                })
             }
         
         }
@@ -215,7 +248,25 @@ extension CookbookViewController : KTCDownloaderDelegate{
     
 }
 
+extension CookbookViewController : KTCSegmentCtrlDelegate {
+    
+    func didSelectSegCtrl(segCtrl: KTCSegmentCtrl, atIndex index: Int) {
+        
+        scrollView?.contentOffset = CGPointMake(kScreenWidth*CGFloat(index), 0)
+        
+    }
+    
+}
 
+extension CookbookViewController : UIScrollViewDelegate {
+    
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        let index = Int(scrollView.contentOffset.x/scrollView.bounds.size.width)
+        //修改标题选中的按钮
+        segCtrl?.selectIndex = index
+    }
+    
+}
 
 
 
