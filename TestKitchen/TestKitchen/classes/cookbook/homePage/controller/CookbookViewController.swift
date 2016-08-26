@@ -190,6 +190,49 @@ class CookbookViewController: BaseViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    //MARK: 首页推荐部分的方法
+    //食材课程分集显示
+    func gotoFoodCoursePage(link: String){
+        
+        //第一个#
+        let startRange = NSString(string: link).rangeOfString("#")
+        
+        //第二个#
+        let endRang = NSString(string: link).rangeOfString("#", options: NSStringCompareOptions.BackwardsSearch, range: NSMakeRange(0, link.characters.count), locale: nil)
+        
+        let id = NSString(string: link).substringWithRange(NSMakeRange(startRange.location+1, endRang.location-startRange.location-1))
+        
+        //跳转界面
+        let foodCourseCtrl = FoodCourseViewController()
+        foodCourseCtrl.serialId = id
+        navigationController?.pushViewController(foodCourseCtrl, animated: true)
+        
+    }
+    
+    //显示首页推荐的数据
+    func showRecommendData(model: CBRecommendModel){
+        
+        recommendView?.model = model
+        
+        //点击事件
+        recommendView?.clickClosure = {
+            [weak self]
+            (title: String?, link: String) in
+            
+            if link.hasPrefix("app://food_course_series") == true {
+                
+                //食材课程分集显示
+                self!.gotoFoodCoursePage(link)
+                
+            }
+            
+        }
+        
+    }
+    
+    //MARK: 首页食材
+    
+    //MARK: 首页分类
 
     /*
     // MARK: - Navigation
@@ -221,7 +264,7 @@ extension CookbookViewController : KTCDownloaderDelegate{
                 //显示数据
                 dispatch_async(dispatch_get_main_queue(), {
                     [weak self] in
-                    self!.recommendView?.model = model
+                    self!.showRecommendData(model)
                     })
             }else if downloader.type == .FoodMaterial {
                 //食材

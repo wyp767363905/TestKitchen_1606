@@ -9,6 +9,9 @@
 import UIKit
 
 class CBRecommendView: UIView {
+    
+    //点击事件
+    var clickClosure: CBCellClosure?
 
     //表格
     private var tbView: UITableView?
@@ -158,7 +161,7 @@ extension CBRecommendView : UITableViewDelegate, UITableViewDataSource {
         if indexPath.section == 0 {
             //广告
             if model?.data?.banner?.count > 0 {
-                cell = CBRecommendADCell.createAdCellFor(tableView, atIndexPath: indexPath, withModel: model!)
+                cell = CBRecommendADCell.createAdCellFor(tableView, atIndexPath: indexPath, withModel: model!, cellClousure: clickClosure)
             }
         }else{
             //其他的情况

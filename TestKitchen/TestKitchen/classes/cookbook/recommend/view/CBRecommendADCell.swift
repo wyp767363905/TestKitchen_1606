@@ -9,6 +9,9 @@
 import UIKit
 
 class CBRecommendADCell: UITableViewCell {
+    
+    //图片的点击事件
+    var clickClosure: CBCellClosure?
 
     @IBOutlet weak var scrollView: UIScrollView!
     
@@ -69,6 +72,12 @@ class CBRecommendADCell: UITableViewCell {
                 tmpImageView.kf_setImageWithURL(url, placeholderImage: image, optionsInfo: nil, progressBlock: nil, completionHandler: nil)
                 containerView.addSubview(tmpImageView)
                 
+                //添加手势
+                tmpImageView.userInteractionEnabled = true
+                tmpImageView.tag = 500+i
+                let g = UITapGestureRecognizer(target: self, action: #selector(tapImage(_:)))
+                tmpImageView.addGestureRecognizer(g)
+                
                 //约束
                 tmpImageView.snp_makeConstraints(closure: { (make) in
                     make.top.bottom.equalTo(containerView)
@@ -100,8 +109,25 @@ class CBRecommendADCell: UITableViewCell {
         
     }
     
+    func tapImage(g: UIGestureRecognizer) {
+        let index = (g.view?.tag)!-500
+        
+        //获取模型对象
+        let imageModel = bannerArray![index]
+        
+        //要将点击事件传到视图控制器
+        clickClosure!(nil, imageModel.banner_link!)
+        
+    }
+    
     //创建cell的方法
-    class func createAdCellFor(tableView: UITableView, atIndexPath indexPath: NSIndexPath, withModel model: CBRecommendModel) -> CBRecommendADCell {
+    /*
+     @param tableView:cell所在的表格
+     @param indexPath:cell在表格上的位置
+     @param model:cell显示的数据
+     @param cellClousure:图片点击事件
+     */
+    class func createAdCellFor(tableView: UITableView, atIndexPath indexPath: NSIndexPath, withModel model: CBRecommendModel, cellClousure: CBCellClosure?) -> CBRecommendADCell {
         
         let cellId = "recommendADCellId"
         
@@ -112,6 +138,8 @@ class CBRecommendADCell: UITableViewCell {
         
         //显示数据
         cell?.bannerArray = model.data?.banner
+        
+        cell?.clickClosure = cellClousure
         
         return cell!
         
