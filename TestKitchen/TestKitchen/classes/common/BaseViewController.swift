@@ -21,8 +21,8 @@ class BaseViewController: UIViewController {
     //导航标题
     func addNavTitle(title: String) {
         
-        let titleLabel = UILabel.createLabel(title, font: UIFont.systemFontOfSize(24), textAlignment: .Center, textColor: UIColor.blackColor())
-        
+        let titleLabel = UILabel.createLabel(title, font: UIFont.systemFontOfSize(20), textAlignment: .Center, textColor: UIColor.blackColor())
+        titleLabel.frame = CGRectMake(80, 0, kScreenWidth-80*2, 44)
         navigationItem.titleView = titleLabel
         
     }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CommunityViewController: BaseViewController {
+class CommunityViewController: KTCHomeViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

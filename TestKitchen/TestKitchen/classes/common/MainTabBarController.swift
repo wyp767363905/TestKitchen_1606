@@ -114,6 +114,9 @@ class MainTabBarController: UITabBarController {
         
         self.viewControllers = vCtrlArray
         
+        //隐藏系统的tabbar
+        tabBar.hidden = true
+        
         //自定制tabbar
         createCustomTabbar(titleNames, imageNames: imageNames)
         
@@ -216,6 +219,26 @@ class MainTabBarController: UITabBarController {
         
         //3.选中视图控制器
         selectedIndex = curBtn.tag - 300
+        
+    }
+    
+    //显示tabbar
+    func showTabbar(){
+        
+        UIView.animateWithDuration(0.05) {
+            [weak self] in
+            self!.bgView?.hidden = false
+        }
+        
+    }
+    
+    //隐藏tabbar
+    func hideTabbar(){
+        
+        UIView.animateWithDuration(0.05) { 
+            [weak self] in
+            self!.bgView?.hidden = true
+        }
         
     }
 

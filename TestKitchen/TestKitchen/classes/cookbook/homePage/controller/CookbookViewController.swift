@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CookbookViewController: BaseViewController {
+class CookbookViewController: KTCHomeViewController {
     
     //滚动视图
     var scrollView: UIScrollView?
@@ -24,7 +24,7 @@ class CookbookViewController: BaseViewController {
     
     //导航的标题视图
     private var segCtrl: KTCSegmentCtrl?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

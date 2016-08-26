@@ -29,6 +29,15 @@ class FoodCourseViewController: BaseViewController {
     //集数的cell是合起还是展开
     private var serialIsExpand: Bool = false
     
+    //评论数据的当前页数
+    private var curPage = 1
+    
+    //评论的数据
+    private var commentModel: FCComment?
+    
+    //评论数据是否有更多
+    private var infoLabel: UILabel?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -43,9 +52,31 @@ class FoodCourseViewController: BaseViewController {
         //下载食课数据
         downloadFoodCourseData()
         
+        //下载评论的数据
+        downloadCommentData()
+        
     }
     
-    //下载食课数据
+    /**下载评论的数据*/
+    func downloadCommentData(){
+        //methodName=CommentList&page=1&relate_id=22&size=10&token=&type=2&user_id=&version=4.32
+        //methodName=CommentList&page=2&relate_id=22&size=10&token=&type=2&user_id=&version=4.32
+        
+        var params = Dictionary<String,String>()
+        params["methodName"] = "CommentList"
+        params["page"] = "\(curPage)"
+        params["size"] = "10"
+        params["relate_id"] = serialId
+        params["type"] = "2"
+        
+        let downloader = KTCDownloader()
+        downloader.type = .FoodCourseComment
+        downloader.delegate = self
+        downloader.postWithUrl(kHostUrl, params: params)
+        
+    }
+    
+    /** 下载食课数据*/
     func downloadFoodCourseData(){
         //methodName=CourseSeriesView&series_id=22&token=&user_id=&version=4.32
         
@@ -85,6 +116,11 @@ class FoodCourseViewController: BaseViewController {
         view.addSubview(tbView!)
         
     }
+    
+    /** 评论按钮*/
+    func commentAction(){
+        
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -117,15 +153,70 @@ extension FoodCourseViewController : KTCDownloaderDelegate {
             if let jsonData = data {
                 let model = FoodCourseModel.parseModelWithData(jsonData)
                 serialModel = model
+                
+                
+                
+                //回到主线程刷新
+                dispatch_async(dispatch_get_main_queue(), {
+                    [weak self] in
+                    self!.tbView?.reloadData()
+                    //显示标题
+                    let array = self!.serialModel?.data?.series_name?.componentsSeparatedByString("#")
+                    if array?.count > 1 {
+                        self!.addNavTitle(array![1])
+                    }
+                })
             }
             
-            //回到主线程刷新
-            dispatch_async(dispatch_get_main_queue(), { 
-                [weak self] in
-                self!.tbView?.reloadData()
-            })
         }else if downloader.type == .FoodCourseComment {
             //评论数据
+            if let jsonData = data {
+                
+                let model = FCComment.parseModelData(jsonData)
+                
+                if curPage == 1 {
+                    commentModel = model
+                }else{
+                    //加载更多
+                    let mutableArray = NSMutableArray(array: (commentModel?.data?.data)!)
+                    mutableArray.addObjectsFromArray((model.data?.data)!)
+                    let array = NSArray(array: mutableArray)
+                    commentModel?.data?.data = array as? [FCCommentDetail]
+                }
+                
+                //刷新UI
+                dispatch_async(dispatch_get_main_queue(), { 
+                    [weak self] in
+                    
+                    //判断是否有更多
+                    var hasMore = false
+                    if self!.commentModel?.data?.total != nil {
+                        
+                        let total = NSString(string: (self!.commentModel?.data?.total)!).integerValue
+                        if total > self!.commentModel?.data?.data?.count {
+                            hasMore = true
+                        }
+                    }
+                    
+                    //创建label
+                    if self!.infoLabel == nil {
+                        self!.infoLabel = UILabel.createLabel(nil, font: UIFont.systemFontOfSize(16), textAlignment: .Center, textColor: UIColor.blackColor())
+                        self!.infoLabel?.frame = CGRectMake(0, 0, kScreenWidth, 40)
+                        self!.infoLabel?.backgroundColor = UIColor(white: 0.8, alpha: 1.0)
+                        
+                        self!.tbView?.tableFooterView = self!.infoLabel
+                    }
+                    
+                    if hasMore {
+                        self!.infoLabel?.text = "下拉加载更多"
+                    }else{
+                        self?.infoLabel?.text = "没有更多了!"
+                    }
+                    
+                    self!.tbView?.reloadData()
+                })
+            }
+            
         }
         
     }
@@ -148,7 +239,10 @@ extension FoodCourseViewController : UITableViewDelegate,UITableViewDataSource {
                 rowNum = 3
             }
         }else if section == 1 {
-            
+            //评论
+            if commentModel?.data?.data?.count > 0 {
+                rowNum = (commentModel?.data?.data?.count)!
+            }
         }
         
         return rowNum
@@ -176,7 +270,8 @@ extension FoodCourseViewController : UITableViewDelegate,UITableViewDataSource {
             }
             
         }else if indexPath.section == 1 {
-            
+            //评论
+            height = 80
         }
         
         return height
@@ -203,12 +298,30 @@ extension FoodCourseViewController : UITableViewDelegate,UITableViewDataSource {
             }
             
         }else if indexPath.section == 1 {
-            
+            //评论
+            let detailModel = commentModel?.data?.data![indexPath.row]
+            cell = createCommentCellForTableView(tableView, atIndexPath: indexPath, withModel: detailModel!)
         }
         
         cell.selectionStyle = .None
         
         return cell
+    }
+    
+    /** 创建评论的cell*/
+    func createCommentCellForTableView(tableView: UITableView, atIndexPath indexPath: NSIndexPath, withModel detailModel: FCCommentDetail) -> FCCommentCell {
+        
+        let cellId = "commentCellId"
+        var cell = tableView.dequeueReusableCellWithIdentifier(cellId) as? FCCommentCell
+        if nil == cell {
+            cell = NSBundle.mainBundle().loadNibNamed("FCCommentCell", owner: nil, options: nil).last as? FCCommentCell
+        }
+        
+        //数据
+        cell?.model = detailModel
+        
+        return cell!
+        
     }
     
     /** 创建视频的cell*/
@@ -260,7 +373,7 @@ extension FoodCourseViewController : UITableViewDelegate,UITableViewDataSource {
         
     }
     
-    /** */
+    /** 创建集数的cell*/
     func createSerialCellForTableView(tableView: UITableView, atIndexPath indexPath: NSIndexPath, withModel model: FoodCourseModel) -> FCSerialCell {
         
         let cellId = "serialCellId"
@@ -282,6 +395,78 @@ extension FoodCourseViewController : UITableViewDelegate,UITableViewDataSource {
         
         return cell!
         
+    }
+    
+    //加载更多
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        
+        //如果没有更多了就不加载了
+        if commentModel?.data?.total != nil {
+            let totalCount = NSString(string: (commentModel?.data?.total)!)
+            if totalCount == commentModel?.data?.data?.count {
+                return
+            }
+        }
+        
+        let h: CGFloat = 70
+        
+        if scrollView.contentOffset.y > h {
+            
+            scrollView.contentInset = UIEdgeInsetsMake(-h, 0, 0, 0)
+            
+        }else if scrollView.contentOffset.y > 0 {
+            
+            scrollView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0, 0, 0)
+            
+        }
+        
+        let offset: CGFloat = 40
+        if scrollView.contentOffset.y >= scrollView.contentSize.height-scrollView.bounds.size.height-offset {
+            
+            //下载下一页的数据
+            curPage += 1
+            downloadCommentData()
+            
+        }
+        
+    }
+    
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        if section == 1 {
+            //评论
+            let bgView = UIView.createView()
+            bgView.frame = CGRectMake(0, 0, kScreenWidth, 60)
+            bgView.backgroundColor = UIColor.whiteColor()
+            
+            //评论数
+            if commentModel?.data?.total != nil {
+                let str = "\((commentModel?.data?.total)!)条评论"
+                let numLabel = UILabel.createLabel(str, font: UIFont.systemFontOfSize(17), textAlignment: .Left, textColor: UIColor.grayColor())
+                numLabel.frame = CGRectMake(20, 4, 160, 20)
+                bgView.addSubview(numLabel)
+            }
+            
+            //评论按钮
+            let btn = UIButton.createBtn("我要评论", bgImageName: nil, selectBgImageName: nil, target: self, action: #selector(commentAction))
+            btn.backgroundColor = UIColor.orangeColor()
+            btn.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+            btn.frame = CGRectMake(20, 34, kScreenWidth-20*2, 30)
+            btn.layer.cornerRadius = 6
+            btn.layer.masksToBounds = true
+            bgView.addSubview(btn)
+
+            return bgView
+            
+        }
+        return nil
+    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 1 {
+            return 70
+        }
+        return 0
     }
     
 }

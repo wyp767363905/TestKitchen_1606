@@ -100,6 +100,11 @@
 		BCE06EDD1D6FDB0A008EBAF0 /* FCSerialCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE06EDC1D6FDB0A008EBAF0 /* FCSerialCell.swift */; };
 		BCE06EE11D6FF22D008EBAF0 /* pull@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCE06EDF1D6FF22D008EBAF0 /* pull@3x.png */; };
 		BCE06EE21D6FF22D008EBAF0 /* push@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCE06EE01D6FF22D008EBAF0 /* push@3x.png */; };
+		BCE06EE41D70195C008EBAF0 /* FCComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE06EE31D70195C008EBAF0 /* FCComment.swift */; };
+		BCE06EE61D702080008EBAF0 /* 举报.png in Resources */ = {isa = PBXBuildFile; fileRef = BCE06EE51D702080008EBAF0 /* 举报.png */; };
+		BCE06EE91D7020AB008EBAF0 /* FCCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE06EE71D7020AB008EBAF0 /* FCCommentCell.swift */; };
+		BCE06EEA1D7020AB008EBAF0 /* FCCommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BCE06EE81D7020AB008EBAF0 /* FCCommentCell.xib */; };
+		BCE06EEC1D702E14008EBAF0 /* KTCHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE06EEB1D702E14008EBAF0 /* KTCHomeViewController.swift */; };
 		BCE22B411D66995A0021284F /* play-A@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCE22B3F1D66995A0021284F /* play-A@2x.png */; };
 		BCE22B421D66995A0021284F /* play-A@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCE22B401D66995A0021284F /* play-A@3x.png */; };
 		BCFF41F41D63FBAF00DFBF5D /* CBRecommendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFF41F31D63FBAF00DFBF5D /* CBRecommendView.swift */; };
@@ -234,6 +239,11 @@
 		BCE06EDC1D6FDB0A008EBAF0 /* FCSerialCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FCSerialCell.swift; sourceTree = "<group>"; };
 		BCE06EDF1D6FF22D008EBAF0 /* pull@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pull@3x.png"; sourceTree = "<group>"; };
 		BCE06EE01D6FF22D008EBAF0 /* push@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "push@3x.png"; sourceTree = "<group>"; };
+		BCE06EE31D70195C008EBAF0 /* FCComment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FCComment.swift; sourceTree = "<group>"; };
+		BCE06EE51D702080008EBAF0 /* 举报.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "举报.png"; sourceTree = "<group>"; };
+		BCE06EE71D7020AB008EBAF0 /* FCCommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FCCommentCell.swift; sourceTree = "<group>"; };
+		BCE06EE81D7020AB008EBAF0 /* FCCommentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FCCommentCell.xib; sourceTree = "<group>"; };
+		BCE06EEB1D702E14008EBAF0 /* KTCHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KTCHomeViewController.swift; sourceTree = "<group>"; };
 		BCE22B3F1D66995A0021284F /* play-A@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play-A@2x.png"; sourceTree = "<group>"; };
 		BCE22B401D66995A0021284F /* play-A@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play-A@3x.png"; sourceTree = "<group>"; };
 		BCFF41F31D63FBAF00DFBF5D /* CBRecommendView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CBRecommendView.swift; sourceTree = "<group>"; };
@@ -486,6 +496,7 @@
 				BCFF41F91D6407F400DFBF5D /* UIImageView+Util.swift */,
 				BC82597A1D654B9900984A5A /* Util.swift */,
 				BCB94B6F1D6BFC6200EC961A /* KTCSegmentCtrl.swift */,
+				BCE06EEB1D702E14008EBAF0 /* KTCHomeViewController.swift */,
 			);
 			path = common;
 			sourceTree = "<group>";
@@ -748,6 +759,7 @@
 			isa = PBXGroup;
 			children = (
 				BC7E01881D6E95F600A87D15 /* FoodCourseModel.swift */,
+				BCE06EE31D70195C008EBAF0 /* FCComment.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -760,6 +772,8 @@
 				BCE06ED81D6FCF12008EBAF0 /* FCCourseCell.swift */,
 				BCE06ED91D6FCF12008EBAF0 /* FCCourseCell.xib */,
 				BCE06EDC1D6FDB0A008EBAF0 /* FCSerialCell.swift */,
+				BCE06EE71D7020AB008EBAF0 /* FCCommentCell.swift */,
+				BCE06EE81D7020AB008EBAF0 /* FCCommentCell.xib */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -821,6 +835,7 @@
 		BCE06EDE1D6FF22D008EBAF0 /* foodCourse */ = {
 			isa = PBXGroup;
 			children = (
+				BCE06EE51D702080008EBAF0 /* 举报.png */,
 				BCE06EDF1D6FF22D008EBAF0 /* pull@3x.png */,
 				BCE06EE01D6FF22D008EBAF0 /* push@3x.png */,
 			);
@@ -965,9 +980,11 @@
 				BC1486FC1D62A16500116152 /* report_normal@3x.png in Resources */,
 				BC1487221D62B9C200116152 /* navBtn_bag.png in Resources */,
 				BC1487251D62B9C200116152 /* search@2x.png in Resources */,
+				BCE06EEA1D7020AB008EBAF0 /* FCCommentCell.xib in Resources */,
 				BC1487011D62A16500116152 /* shike_select@2x.png in Resources */,
 				BCE06EDB1D6FCF12008EBAF0 /* FCCourseCell.xib in Resources */,
 				BC14871D1D62B9C200116152 /* LaunchImage-800-Landscape-736h@3x.png in Resources */,
+				BCE06EE61D702080008EBAF0 /* 举报.png in Resources */,
 				BC14871C1D62B9C200116152 /* LaunchImage-800-667h@2x.png in Resources */,
 				BC1486FB1D62A16500116152 /* report_normal@2x.png in Resources */,
 				BCE22B421D66995A0021284F /* play-A@3x.png in Resources */,
@@ -1086,6 +1103,7 @@
 				BCD5122D1D66942B00B09155 /* CBRecommendNewCell.swift in Sources */,
 				BC385BE41D6151B300C5BFA6 /* ViewController.swift in Sources */,
 				BCE06EDA1D6FCF12008EBAF0 /* FCCourseCell.swift in Sources */,
+				BCE06EE41D70195C008EBAF0 /* FCComment.swift in Sources */,
 				BC82597D1D655AE800984A5A /* CBSearchHeaderView.swift in Sources */,
 				BC385C531D615B9800C5BFA6 /* FoodClassViewController.swift in Sources */,
 				BC385C491D615AFC00C5BFA6 /* BaseViewController.swift in Sources */,
@@ -1102,8 +1120,10 @@
 				BC94C7A41D6D3B0A00FE27D9 /* CBMaterialCell.swift in Sources */,
 				BC385C571D615BB800C5BFA6 /* ProfileViewController.swift in Sources */,
 				BCFFA47C1D6AA60F00D3E05B /* CBWorksCell.swift in Sources */,
+				BCE06EEC1D702E14008EBAF0 /* KTCHomeViewController.swift in Sources */,
 				BC385C451D615A8F00C5BFA6 /* MainTabBarController.swift in Sources */,
 				BCFF41F41D63FBAF00DFBF5D /* CBRecommendView.swift in Sources */,
+				BCE06EE91D7020AB008EBAF0 /* FCCommentCell.swift in Sources */,
 				BC8FF7C81D6A905E00D9BE3A /* CBSceneCell.swift in Sources */,
 				BC385C511D615B8500C5BFA6 /* CookbookViewController.swift in Sources */,
 				BCB94B6E1D6BF6FC00EC961A /* CBMaterialView.swift in Sources */,

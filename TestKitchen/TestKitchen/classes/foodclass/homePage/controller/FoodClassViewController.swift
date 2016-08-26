@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FoodClassViewController: BaseViewController {
+class FoodClassViewController: KTCHomeViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
